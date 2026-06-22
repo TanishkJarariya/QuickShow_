@@ -12,21 +12,31 @@ import userRouter from './routes/userRoutes.js';
 import { stripeWebhooks } from './controllers/stripeWebhooks.js';
 
 const app = express();
-const port = 3000;
 
 await connectDB()
 
-// Stripe Webhooks Route
-app.use('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
+// Stripe Webhooks (must be before express.json())
+app.use('/api/stripe', express.raw({ type: 'application/json' }), stripeWebhooks)
 
-// Middleware — MUST be before all routes
+// Global Middleware
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+  origin: [
+    'https://quickshow-client-indol.vercel.app',
+    'https://app.inngest.com',
+    'http://localhost:5173'
+  ],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}))
 
-// API Routes
-app.get('/', (req, res)=> res.send('Server is Live!'))
-app.use('/api/inngest', serve({ client: inngest, functions }))  // ← NO clerkMiddleware before this
-app.use(clerkMiddleware())  // ← moved BELOW inngest route
+// Routes
+app.get('/', (req, res) => res.send('Server is Live!'))
+app.use('/api/inngest', serve({ client: inngest, functions }))
+
+// Clerk middleware AFTER inngest route
+app.use(clerkMiddleware())
 app.use('/api/show', showRouter)
 app.use('/api/booking', bookingRouter)
 app.use('/api/admin', adminRouter)
