@@ -22,7 +22,7 @@ app.use('/api/stripe', express.raw({ type: 'application/json' }), stripeWebhooks
 app.use(express.json())
 app.use(cors({
   origin: [
-    'https://quickshow-client-indol.vercel.app',
+    'https://quick-show-client-kappa.vercel.app',
     'https://app.inngest.com',
     'http://localhost:5173'
   ],
