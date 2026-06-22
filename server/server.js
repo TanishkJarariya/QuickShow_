@@ -19,20 +19,18 @@ await connectDB()
 // Stripe Webhooks Route
 app.use('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
 
-// Middleware
+// Middleware — MUST be before all routes
 app.use(express.json())
 app.use(cors())
-app.use(clerkMiddleware())
-
 
 // API Routes
 app.get('/', (req, res)=> res.send('Server is Live!'))
-app.use('/api/inngest', serve({ client: inngest, functions }))
+app.use('/api/inngest', serve({ client: inngest, functions }))  // ← NO clerkMiddleware before this
+app.use(clerkMiddleware())  // ← moved BELOW inngest route
 app.use('/api/show', showRouter)
 app.use('/api/booking', bookingRouter)
 app.use('/api/admin', adminRouter)
 app.use('/api/user', userRouter)
-
 
 if (process.env.NODE_ENV !== "production") {
   app.listen(3000, () => {
@@ -41,4 +39,3 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export default app;
-
