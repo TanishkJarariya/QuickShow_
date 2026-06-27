@@ -1,4 +1,4 @@
-__QuickShow__
+#QuickShow
 
 QuickShow is a modern, high-performance movie ticket booking platform designed to provide a seamless cinema experience. From movie discovery to secure payment and automated booking confirmation, QuickShow ensures a fast, secure, and user-friendly journey.
 
