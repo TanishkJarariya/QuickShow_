@@ -16,15 +16,4 @@ QuickShow is a modern, high-performance movie ticket booking platform designed t
 - **Automation/Background Tasks:** Inngest
 - **Styling:** Tailwind CSS (recommended)
 
-## Getting Started
 
-### Prerequisites
-- Node.js installed
-- Stripe account
-- Clerk account
-- TMDB API Key
-
-### Installation
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/yourusername/quickshow.git](https://github.com/yourusername/quickshow.git)
